@@ -3,7 +3,9 @@ FarmStall API
 
 *This is a contrived API* As part of the ongoing Swagger In Action book by Manning.
 
-== FarmStall API
+The API is hosted at https://farmstall.ponelat.com/v1
+
+## FarmStall API
 
 The FarmStall service helps the Farmer's Market by encouraging feedback on the experience from the patrons that visit.
 
