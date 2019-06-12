@@ -1,0 +1,7 @@
+*
+*/
+
+!*.go
+!reviews/*.go
+!go.mod
+!go.sum
