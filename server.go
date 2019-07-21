@@ -41,6 +41,7 @@ func main() {
 	api := m.PathPrefix("/v1").Subrouter()
 	api.HandleFunc("/reviews", server.getReviews()).Methods(http.MethodGet)
 	api.HandleFunc("/reviews", server.addReview()).Methods(http.MethodPost)
+	api.HandleFunc("/reviews/{reviewId}", server.getReview()).Methods(http.MethodGet)
 	api.HandleFunc("/reviews/{reviewId}", server.deleteReview()).Methods(http.MethodDelete)
 	api.HandleFunc("/reviews/{reviewId}", server.updateReview()).Methods(http.MethodPut)
 
@@ -160,6 +161,20 @@ func (ctx *Server) getReviews() MiddlewareFn {
 		reviews, _ := ctx.Reviews.GetReviews()
 		writeJson(200, reviews)(w, r)
 	}
+}
+
+func (ctx *Server) getReview() MiddlewareFn {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		reviewId := vars["reviewId"]
+		review, err := ctx.Reviews.GetReview(reviewId)
+		if err != nil {
+			ErrorResponse(404, err.Error())(w, r)
+		} else {
+			writeJson(200, review)(w, r)
+		}
+	}
+
 }
 
 // Bunch of HTTP stuffs...
