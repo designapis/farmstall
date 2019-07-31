@@ -25,6 +25,10 @@ type ReviewError struct {
 	Code string `json:"code"`
 }
 
+type ReviewFilters struct {
+	MaxRating int `json:"maxRating"`
+}
+
 func (e ReviewError) Error() string {
 	return fmt.Sprintf("%s: %s %s", e.Uuid, e.Msg, e.Code)
 }
@@ -82,6 +86,16 @@ func (rs *Reviews) GetReviews() (*[]Review, error) {
 	v := make([]Review, 0, len(rs.Reviews))
 	for _, value := range rs.Reviews {
 		v = append(v, value)
+	}
+	return &v, nil
+}
+
+func (rs *Reviews) GetReviewsFiltered(filters ReviewFilters) (*[]Review, error) {
+	v := make([]Review, 0, len(rs.Reviews))
+	for _, value := range rs.Reviews {
+		if value.Rating <= filters.MaxRating {
+			v = append(v, value)
+		}
 	}
 	return &v, nil
 }

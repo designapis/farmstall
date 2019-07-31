@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/ulule/limiter/v3"
 	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
@@ -158,8 +159,24 @@ func (ctx *Server) addReview() MiddlewareFn {
 
 func (ctx *Server) getReviews() MiddlewareFn {
 	return func(w http.ResponseWriter, r *http.Request) {
-		reviews, _ := ctx.Reviews.GetReviews()
-		writeJson(200, reviews)(w, r)
+		query := r.URL.Query()
+		maxRating := query.Get("maxRating")
+		log.Printf("\nmaxRating: %s\n", maxRating)
+		var reviewList *[]reviews.Review
+		if maxRating != "" {
+			i, _ := strconv.Atoi(maxRating)
+			if i <= 0 || i > 5 {
+				ErrorResponse(404, "Query parameter 'maxRating' should only be a whole number between 1 and 5 inclusive")(w, r)
+				return
+			}
+			filters := reviews.ReviewFilters{
+				MaxRating: i,
+			}
+			reviewList, _ = ctx.Reviews.GetReviewsFiltered(filters)
+		} else {
+			reviewList, _ = ctx.Reviews.GetReviews()
+		}
+		writeJson(200, reviewList)(w, r)
 	}
 }
 
