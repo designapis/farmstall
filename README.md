@@ -13,10 +13,10 @@ The patrons can create reviews, and view the reviews of others. They can do so a
 
 Reviews are messages ( in markdown format ), with a corresponding rating ( 1 to 5 inclusive ) that helps broadly categorize the feedback into shades of positive/negative. Where a rating of 5 is the most postive type of review.
 
-
-
-
-
-
-
-
+## Swagger in Action TODOs
+- [x] Add maxRating to GET /reviews
+- [x] Add rate limiting
+- [] Add user store
+- [] Add token store ( assoc with user )
+- [] Add auth to POST /reviews and GET /reviews/{reviewId}
+- [] Add problem+json for error responses
