@@ -16,18 +16,18 @@ func (p *PasswordError) Error() string {
 
 // From https://medium.com/@jcox250/password-hash-salt-using-golang-b041dc94cb72
 
-type passwordStore struct {
+type PasswordStore struct {
 	passwords map[UUID]string
 }
 
-func NewPasswordStore() *passwordStore {
-	p := passwordStore{
+func NewPasswordStore() *PasswordStore {
+	p := PasswordStore{
 		passwords: make(map[UUID]string),
 	}
 	return &p
 }
 
-func (p *passwordStore) Add(uuid UUID, pwd string) error {
+func (p *PasswordStore) Add(uuid UUID, pwd string) error {
 
 	// Use GenerateFromPassword to hash & salt pwd.
 	// MinCost is just an integer constant provided by the bcrypt
@@ -45,7 +45,7 @@ func (p *passwordStore) Add(uuid UUID, pwd string) error {
 	return nil
 }
 
-func (p *passwordStore) Get(uuid UUID) (string, error) {
+func (p *PasswordStore) Get(uuid UUID) (string, error) {
 	hash, found := p.passwords[uuid]
 	if !found {
 		return "", &PasswordError{Msg: "Password not in system"}
@@ -53,7 +53,7 @@ func (p *passwordStore) Get(uuid UUID) (string, error) {
 	return hash, nil
 }
 
-func (p *passwordStore) Verify(uuid UUID, plainPwd string) (bool, error) {
+func (p *PasswordStore) Verify(uuid UUID, plainPwd string) (bool, error) {
 	hashedPwd, getErr := p.Get(uuid)
 
 	if getErr != nil {
