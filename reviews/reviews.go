@@ -2,7 +2,6 @@ package reviews
 
 import (
 	"farmstall/problems"
-	"farmstall/users"
 	"github.com/google/uuid"
 )
 
@@ -11,10 +10,10 @@ const BASE_PATH = "/reviews"
 type UUID = string
 type ReviewMap map[UUID]Review
 type Review struct {
-	Uuid    UUID        `json:"uuid"`
-	Message string      `json:"message"`
-	Rating  int         `json:"rating"`
-	User    *users.User `json:"userId"`
+	Uuid    UUID   `json:"uuid"`
+	Message string `json:"message"`
+	Rating  int    `json:"rating"`
+	UserID  UUID   `json:"userId"`
 }
 
 type ReviewFilters struct {

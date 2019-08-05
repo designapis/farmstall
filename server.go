@@ -120,6 +120,29 @@ func (ctx *Server) initDummyData() {
 		Message: "Was terrible.",
 		Rating:  1,
 	})
+
+	ctx.Users.AddUser(users.NewUser{
+		Username: "ponelat",
+		FullName: "Josh Ponelat",
+		Password: "password",
+	})
+
+	ctx.Users.AddUser(users.NewUser{
+		Username: "mckenzie",
+		FullName: "Bob McKenzie",
+		Password: "password",
+	})
+
+	ctx.Users.CreateToken(users.UserLogin{
+		Username: "ponelat",
+		Password: "password",
+	}, "aabbcceeff")
+
+	ctx.Users.CreateToken(users.UserLogin{
+		Username: "mckenzie",
+		Password: "password",
+	}, "aabbcceefg")
+
 }
 
 // Validate the incoming request against our schema(s)
@@ -243,7 +266,7 @@ func (ctx *Server) createToken() MiddlewareFn {
 			return
 		}
 
-		token, tokenErr := ctx.Users.CreateToken(user)
+		token, tokenErr := ctx.Users.CreateToken(user, "")
 		if tokenErr != nil {
 			ErrorResponse(tokenErr.(*problems.ProblemJson))(w, r)
 			return
@@ -269,6 +292,18 @@ func (ctx *Server) addReview() MiddlewareFn {
 			}))(w, r)
 			return
 		}
+
+		token := r.Header.Get("Authorization")
+
+		if token != "" {
+			user, userErr := ctx.Users.UserFromToken(token)
+			if userErr != nil {
+				ErrorResponse(userErr.(*problems.ProblemJson))(w, r)
+				return
+			}
+			review.UserID = user.Uuid
+		}
+
 		res, _ := ctx.Reviews.AddReview(review)
 		writeJson(201, res)(w, r)
 	}

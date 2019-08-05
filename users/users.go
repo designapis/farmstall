@@ -5,6 +5,7 @@ import (
 	"farmstall/problems"
 	"fmt"
 	"github.com/google/uuid"
+	_ "log"
 	"math/rand"
 	"time"
 )
@@ -42,7 +43,7 @@ type TokenResponse struct {
 	Token string `json:"token"`
 }
 
-func (us *Users) CreateToken(ul UserLogin) (string, error) {
+func (us *Users) CreateToken(ul UserLogin, tokenOverride string) (string, error) {
 	user, userErr := us.GetFirstUserByUsername(ul.Username)
 	if userErr != nil {
 		return "", userErr
@@ -56,7 +57,12 @@ func (us *Users) CreateToken(ul UserLogin) (string, error) {
 		})
 	}
 
-	token := RandomString(10)
+	var token string
+	if tokenOverride != "" {
+		token = tokenOverride
+	} else {
+		token = RandomString(10)
+	}
 	us.Tokens[user.Uuid] = token
 
 	return token, nil
@@ -124,6 +130,19 @@ func (us *Users) GetUsers() (*[]User, error) {
 		v = append(v, value)
 	}
 	return &v, nil
+}
+
+func (us *Users) UserFromToken(token string) (*User, error) {
+	for id, tok := range us.Tokens {
+		if tok == token {
+			user := us.Users[id]
+			return &user, nil
+		}
+	}
+
+	return nil, problems.InvalidCreds(problems.ProblemJson{
+		Detail: "Invalid token",
+	})
 }
 
 func NewUsers() *Users {

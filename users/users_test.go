@@ -82,7 +82,7 @@ func TestCreateTokenFromUsernameAndPassword(t *testing.T) {
 	token, err := users.CreateToken(UserLogin{
 		Username: "ponelat",
 		Password: "password",
-	})
+	}, "")
 
 	assert.NilError(t, err, "should have no errors")
 	assert.Assert(t, is.Len(token, 10), "should be a string ten characters long")
