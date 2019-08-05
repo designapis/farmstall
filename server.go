@@ -17,6 +17,7 @@ import (
 	"farmstall/openapi"
 	"farmstall/problems"
 	"farmstall/reviews"
+	"farmstall/users"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -208,6 +209,50 @@ func (ctx *Server) deleteReview() MiddlewareFn {
 			w.WriteHeader(204)
 			w.Write(nil)
 		}
+	}
+
+}
+
+func (ctx *Server) addUser() MiddlewareFn {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		decoder := json.NewDecoder(r.Body)
+		var user users.NewUser
+		err := decoder.Decode(&user)
+		if err != nil {
+			ErrorResponse(problems.FailedToParseJson(problems.ProblemJson{
+				Detail: err.Error(),
+			}))(w, r)
+			return
+		}
+		res := ctx.Users.AddUser(user)
+		writeJson(201, res)(w, r)
+	}
+}
+
+func (ctx *Server) createToken() MiddlewareFn {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		decoder := json.NewDecoder(r.Body)
+		var user users.UserLogin
+		err := decoder.Decode(&user)
+		if err != nil {
+			ErrorResponse(problems.FailedToParseJson(problems.ProblemJson{
+				Detail: err.Error(),
+			}))(w, r)
+			return
+		}
+
+		token, tokenErr := ctx.Users.CreateToken(user)
+		if tokenErr != nil {
+			ErrorResponse(tokenErr.(*problems.ProblemJson))(w, r)
+			return
+		}
+
+		tokenRes := users.TokenResponse{
+			Token: token,
+		}
+		writeJson(201, tokenRes)(w, r)
 	}
 
 }

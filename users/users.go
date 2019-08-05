@@ -2,23 +2,22 @@ package users
 
 import (
 	"farmstall/passwords"
+	"farmstall/problems"
 	"fmt"
 	"github.com/google/uuid"
 	"math/rand"
 	"time"
 )
 
-const EDENIEDBYCODE = "e4033"
-const ENOTFOUND = "e4040"
-
 type UUID = string
-
 type UserMap map[UUID]User
+
+const BASE_PATH = "/users"
 
 type User struct {
 	Uuid     UUID   `json:"uuid"`
 	Username string `json:"username"`
-	FullName string `json:"userId"`
+	FullName string `json:"fullName"`
 }
 
 type Users struct {
@@ -30,7 +29,7 @@ type Users struct {
 type NewUser struct {
 	Uuid     UUID   `json:"uuid"`
 	Username string `json:"username"`
-	FullName string `json:"userId"`
+	FullName string `json:"fullName"`
 	Password string `json:"password"`
 }
 
@@ -39,22 +38,22 @@ type UserLogin struct {
 	Password string `json:"password"`
 }
 
-type UserError struct {
-	Msg  string `json:"error"`
-	Uuid UUID   `json:"uuid"`
-	Code string `json:"code"`
+type TokenResponse struct {
+	Token string `json:"token"`
 }
 
 func (us *Users) CreateToken(ul UserLogin) (string, error) {
-	user, foundUser := us.GetUserByUsername(ul.Username)
-	if !foundUser {
-		return "", UserError{Msg: "User not found"}
+	user, userErr := us.GetFirstUserByUsername(ul.Username)
+	if userErr != nil {
+		return "", userErr
 	}
 
 	_, verifyErr := us.Passwords.Verify(user.Uuid, ul.Password)
 
 	if verifyErr != nil {
-		return "", verifyErr
+		return "", problems.InvalidCreds(problems.ProblemJson{
+			Detail: "Username or password is invalid",
+		})
 	}
 
 	token := RandomString(10)
@@ -63,7 +62,7 @@ func (us *Users) CreateToken(ul UserLogin) (string, error) {
 	return token, nil
 }
 
-func (us *Users) GetUserByUsername(username string) (*User, bool) {
+func (us *Users) GetFirstUserByUsername(username string) (*User, error) {
 	var user *User
 	for _, testUser := range us.Users {
 		if testUser.Username == username {
@@ -73,17 +72,15 @@ func (us *Users) GetUserByUsername(username string) (*User, bool) {
 	}
 
 	if user == nil {
-		return nil, false
+		return nil, problems.NotFound(problems.ProblemJson{
+			Detail: fmt.Sprintf("No user with username, %s, found", username),
+		})
 	}
 
-	return user, true
+	return user, nil
 }
 
-func (e UserError) Error() string {
-	return fmt.Sprintf("%s: %s %s", e.Uuid, e.Msg, e.Code)
-}
-
-func (us *Users) AddUser(nu NewUser) (*User, error) {
+func (us *Users) AddUser(nu NewUser) *User {
 	uuidVal := uuid.New().String()
 	u := User{
 		FullName: nu.FullName,
@@ -94,7 +91,7 @@ func (us *Users) AddUser(nu NewUser) (*User, error) {
 	us.Users[uuidVal] = u
 	us.Passwords.Add(uuidVal, nu.Password)
 
-	return &u, nil
+	return &u
 }
 
 func (us *Users) GetUser(id UUID) (*User, error) {
@@ -102,16 +99,20 @@ func (us *Users) GetUser(id UUID) (*User, error) {
 	var ok bool
 	user, ok = us.Users[id]
 	if !ok {
-		reErr := &UserError{Uuid: id, Msg: "User not found", Code: ENOTFOUND}
-		return nil, reErr
+		return nil, problems.NotFound(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + id,
+			Detail:   fmt.Sprintf("User with uuid, %s, does not exist.", id),
+		})
 	}
 	return &user, nil
 }
 
 func (us *Users) DeleteUser(id UUID) error {
 	if _, ok := us.Users[id]; !ok {
-		reErr := UserError{Uuid: id, Msg: "User not found", Code: ENOTFOUND}
-		return reErr
+		return problems.NotFound(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + id,
+			Detail:   fmt.Sprintf("User with uuid, %s, does not exist.", id),
+		})
 	}
 	delete(us.Users, id)
 	return nil
