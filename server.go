@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -8,11 +9,13 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/getkin/kin-openapi/openapi3filter"
 	"github.com/ulule/limiter/v3"
 	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
 	"github.com/ulule/limiter/v3/drivers/store/memory"
 
 	"farmstall/openapi"
+	"farmstall/problems"
 	"farmstall/reviews"
 
 	"github.com/gorilla/mux"
@@ -21,30 +24,53 @@ import (
 
 type Server struct {
 	Reviews *reviews.Reviews
+	Users   *users.Users
 }
+
+// Set from ENV variable during startup
+var PROBS_URL string
+var BASE_URL string
+
+const BASE_PATH string = "/v1"
 
 // main
 func main() {
 
 	PORT := os.Getenv("PORT")
+	FQDN := os.Getenv("FQDN")
+
 	if PORT == "" {
 		PORT = "8080"
 	}
 
+	if FQDN == "" {
+		FQDN = "https://farmstall.ponelat.com"
+	}
+
+	// Set global
+	PROBS_URL = FQDN + "/probs"
+	BASE_URL = FQDN + BASE_PATH
+
 	server := Server{
 		Reviews: reviews.NewReviews(),
+		Users:   users.NewUsers(),
 	}
 
 	server.initDummyData()
 	m := mux.NewRouter()
 
 	// API
-	api := m.PathPrefix("/v1").Subrouter()
+	api := m.PathPrefix(BASE_PATH).Subrouter()
+	api.Use(server.validateRequestMiddleware)
+
 	api.HandleFunc("/reviews", server.getReviews()).Methods(http.MethodGet)
 	api.HandleFunc("/reviews", server.addReview()).Methods(http.MethodPost)
 	api.HandleFunc("/reviews/{reviewId}", server.getReview()).Methods(http.MethodGet)
 	api.HandleFunc("/reviews/{reviewId}", server.deleteReview()).Methods(http.MethodDelete)
 	api.HandleFunc("/reviews/{reviewId}", server.updateReview()).Methods(http.MethodPut)
+
+	api.HandleFunc("/users", server.addUser()).Methods(http.MethodPost)
+	api.HandleFunc("/tokens", server.createToken()).Methods(http.MethodPost)
 
 	// UI
 	m.HandleFunc("/health", server.health())
@@ -59,19 +85,19 @@ func main() {
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
+		AllowOriginFunc:  func(origin string) bool { return true },
 	})
 
 	// Wrap in CORS
 	handler := c.Handler(m)
 
 	// Create a rate limiter, 1 per second ( 3600 per hour )
-
 	rate, _ := limiter.NewRateFromFormatted("36-M")
 	store := memory.NewStore()
 	rater := stdlib.NewMiddleware(limiter.New(store, rate, limiter.WithTrustForwardHeader(true)))
-
 	handler = rater.Handler(handler)
 
+	// Final handler
 	http.Handle("/", handler)
 
 	fmt.Printf("Listening on :%s\n", PORT)
@@ -95,6 +121,49 @@ func (ctx *Server) initDummyData() {
 	})
 }
 
+// Validate the incoming request against our schema(s)
+func (ctx *Server) validateRequestMiddleware(next http.Handler) http.Handler {
+	return http.StripPrefix("/v1", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// Find operation
+		router := openapi3filter.NewRouter().WithSwaggerFromFile("openapi.yaml")
+		route, pathParams, errOp := router.FindRoute(r.Method, r.URL)
+
+		if errOp != nil {
+			log.Fatalf("Operation not found for %s %s. Error: %s", r.Method, r.URL, errOp)
+		}
+
+		// Validate request against operation
+		requestValidationInput := &openapi3filter.RequestValidationInput{
+			Request:    r,
+			PathParams: pathParams,
+			Route:      route,
+		}
+
+		something := context.TODO()
+
+		if err := openapi3filter.ValidateRequest(something, requestValidationInput); err != nil {
+			switch errVal := err.(type) {
+			case *openapi3filter.RequestError:
+				ErrorResponse(problems.InvalidBody(problems.ProblemJson{
+					Detail: errVal.Reason,
+				}))(w, r)
+				return
+			case *openapi3filter.SecurityRequirementsError:
+				// Allow this for now ( optional securities appear to be an issue )
+				log.Printf("errVal %s", errVal)
+				break
+			default:
+				ErrorResponse(problems.InvalidRequest(problems.ProblemJson{}))(w, r)
+				return
+			}
+		}
+
+		// All good, carry on...
+		next.ServeHTTP(w, r)
+	}))
+}
+
 func (ctx *Server) health() MiddlewareFn {
 	return func(w http.ResponseWriter, r *http.Request) {
 		writeJson(200, map[string]bool{"healthy": true})(w, r)
@@ -111,13 +180,15 @@ func (ctx *Server) updateReview() MiddlewareFn {
 		var review reviews.Review
 		err = decoder.Decode(&review)
 		if err != nil {
-			ErrorResponse(400, err.Error())(w, r)
+			ErrorResponse(problems.FailedToParseJson(problems.ProblemJson{
+				Detail: err.Error(),
+			}))(w, r)
 			return
 		}
 
 		reviewRes, err := ctx.Reviews.UpdateReview(reviewId, review)
 		if err != nil {
-			ErrorResponse(400, err.Error())(w, r)
+			ErrorResponse(err.(*problems.ProblemJson))(w, r)
 		} else {
 			// Empty response
 			writeJson(200, reviewRes)(w, r)
@@ -131,7 +202,7 @@ func (ctx *Server) deleteReview() MiddlewareFn {
 		reviewId := vars["reviewId"]
 		err := ctx.Reviews.DeleteReview(reviewId)
 		if err != nil {
-			ErrorResponse(404, err.Error())(w, r)
+			ErrorResponse(err.(*problems.ProblemJson))(w, r)
 		} else {
 			// Empty response
 			w.WriteHeader(204)
@@ -148,7 +219,9 @@ func (ctx *Server) addReview() MiddlewareFn {
 		var review reviews.Review
 		err := decoder.Decode(&review)
 		if err != nil {
-			ErrorResponse(400, err.Error())(w, r)
+			ErrorResponse(problems.FailedToParseJson(problems.ProblemJson{
+				Detail: err.Error(),
+			}))(w, r)
 			return
 		}
 		res, _ := ctx.Reviews.AddReview(review)
@@ -165,16 +238,18 @@ func (ctx *Server) getReviews() MiddlewareFn {
 		var reviewList *[]reviews.Review
 		if maxRating != "" {
 			i, _ := strconv.Atoi(maxRating)
-			if i <= 0 || i > 5 {
-				ErrorResponse(404, "Query parameter 'maxRating' should only be a whole number between 1 and 5 inclusive")(w, r)
-				return
-			}
+
+			// if i <= 0 || i > 5 {
+			// 	ErrorResponse(404, "Query parameter 'maxRating' should only be a whole number between 1 and 5 inclusive")(w, r)
+			// 	return
+			// }
+
 			filters := reviews.ReviewFilters{
 				MaxRating: i,
 			}
-			reviewList, _ = ctx.Reviews.GetReviewsFiltered(filters)
+			reviewList = ctx.Reviews.GetReviewsFiltered(filters)
 		} else {
-			reviewList, _ = ctx.Reviews.GetReviews()
+			reviewList = ctx.Reviews.GetReviews()
 		}
 		writeJson(200, reviewList)(w, r)
 	}
@@ -186,7 +261,7 @@ func (ctx *Server) getReview() MiddlewareFn {
 		reviewId := vars["reviewId"]
 		review, err := ctx.Reviews.GetReview(reviewId)
 		if err != nil {
-			ErrorResponse(404, err.Error())(w, r)
+			ErrorResponse(err.(*problems.ProblemJson))(w, r)
 		} else {
 			writeJson(200, review)(w, r)
 		}
@@ -197,21 +272,12 @@ func (ctx *Server) getReview() MiddlewareFn {
 // Bunch of HTTP stuffs...
 type MiddlewareFn func(http.ResponseWriter, *http.Request)
 
-type ErrorResponseS struct {
-	Message string `json:"message"`
-	Status  int    `json:"status"`
-}
-
-func ErrorResponse(status int, msg string) MiddlewareFn {
+func ErrorResponse(prob *problems.ProblemJson) MiddlewareFn {
 	return func(w http.ResponseWriter, r *http.Request) {
-		errRes := ErrorResponseS{Message: msg, Status: status}
-		fmt.Printf("Response error: (%d) %s", status, msg)
-		writeJson(status, errRes)(w, r)
+		log.Println(prob.Error())
+		prob := problems.Absolutify(prob, PROBS_URL, BASE_URL)
+		writeJson(prob.Status, prob)(w, r)
 	}
-}
-
-func response404(w http.ResponseWriter, r *http.Request) {
-	ErrorResponse(404, "Resource not found")(w, r)
 }
 
 func writeJson(status int, msg interface{}) MiddlewareFn {

@@ -10,8 +10,7 @@ import (
 
 func TestGetReviewsEmpty(t *testing.T) {
 	reviews := NewReviews()
-	res, err := reviews.GetReviews()
-	assert.NilError(t, err, "should have no errors")
+	res := reviews.GetReviews()
 	assert.Assert(t, is.Len(*res, 0), "should return empty list of reviews")
 }
 
@@ -49,9 +48,7 @@ func TestAddTwoThenGetAllReviews(t *testing.T) {
 		Rating:  1,
 	})
 
-	allReviews, err := reviews.GetReviews()
-
-	assert.NilError(t, err, "should have no errors")
+	allReviews := reviews.GetReviews()
 	assert.Assert(t, is.Len(*allReviews, 2), "should match the number of reviews added")
 }
 
@@ -98,7 +95,7 @@ func TestUpdateReviewInvalidUuid(t *testing.T) {
 		Uuid:    uuid.New().String(),
 	}
 	_, err := reviews.UpdateReview(newReview.Uuid, newReview)
-	assert.ErrorContains(t, err, "Review does not exist", "should return an error")
+	assert.ErrorContains(t, err, "Refusing to update a non-existing resource", "should return an error")
 }
 
 func TestGetAllReviews(t *testing.T) {
@@ -116,8 +113,54 @@ func TestGetAllReviews(t *testing.T) {
 		Rating:  1,
 	})
 
-	allReviews, err := reviews.GetReviews()
-	assert.NilError(t, err, "should have no errors")
-
+	allReviews := reviews.GetReviews()
 	assert.Assert(t, is.Len(*allReviews, 3), "should equal the number of reviews added")
+}
+
+func TestGetReviewsByMaxRatingBelowOrEquals(t *testing.T) {
+	reviews := NewReviews()
+	reviews.AddReview(Review{
+		Message: "good",
+		Rating:  5,
+	})
+	reviews.AddReview(Review{
+		Message: "average",
+		Rating:  3,
+	})
+	reviews.AddReview(Review{
+		Message: "poor",
+		Rating:  1,
+	})
+
+	filters := ReviewFilters{
+		MaxRating: 3,
+	}
+
+	allReviews := reviews.GetReviewsFiltered(filters)
+
+	assert.Assert(t, is.Len(*allReviews, 2), "should equal two, for the reviews with ratings 1 and 3")
+}
+
+func TestGetReviewsByMaxRatingEquals(t *testing.T) {
+	reviews := NewReviews()
+	reviews.AddReview(Review{
+		Message: "good",
+		Rating:  5,
+	})
+	reviews.AddReview(Review{
+		Message: "average",
+		Rating:  3,
+	})
+	reviews.AddReview(Review{
+		Message: "poor",
+		Rating:  1,
+	})
+
+	filters := ReviewFilters{
+		MaxRating: 1,
+	}
+
+	allReviews := reviews.GetReviewsFiltered(filters)
+
+	assert.Assert(t, is.Len(*allReviews, 1), "should equal one, for the review with rating 1")
 }

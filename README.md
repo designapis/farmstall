@@ -16,7 +16,10 @@ Reviews are messages ( in markdown format ), with a corresponding rating ( 1 to 
 ## Swagger in Action TODOs
 - [x] Add maxRating to GET /reviews
 - [x] Add rate limiting
-- [] Add user store
-- [] Add token store ( assoc with user )
+
+- [x] Add user store
+- [x] Add token store ( assoc with user )
+- [x] Add problem+json for error responses
+
 - [] Add auth to POST /reviews and GET /reviews/{reviewId}
-- [] Add problem+json for error responses
+

@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  version: v1
+  title: FarmtStall API
+
+# servers:
+# - url: 'https://farmstall.ponelat.com/v1'
+# - url: 'http://localhost:8080/v1'
+
+paths:
+  /reviews:
+    get:
+      description: Get a list of reviews
+      parameters:
+      - name: maxRating
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: A bunch of reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rating:
+                      type: integer
+                      minimum: 1
+                      maximum: 5
+                    message:
+                      type: string
+                    uuid:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                    userId:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                      nullable: true
+    post:
+      description: Create a new Review
+      security:
+      - Token: []
+      - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: An awesome time for the whole family.
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  example: 5
+      responses:
+        '201':
+          description: Successfully created a new Review
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: An awesome time for the whole family.
+                  rating:
+                    type: integer
+                    minimum: 1
+                    maximum: 5
+                    example: 5
+                  userId:
+                    type: string
+                    nullable: true
+                    pattern: '[a-zA-Z-.0-9]{36}'
+                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                  uuid:
+                    type: string
+                    pattern: '[a-zA-Z-.0-9]{36}'
+                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+
+  /reviews/{reviewId}:
+    get:
+      description: Get a single review
+      security:
+      - Token: []
+      - {}
+      parameters:
+      - name: reviewId
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 36
+          maxLength: 36
+          pattern: '[a-zA-Z0-9-]+'
+      responses:
+        '200':
+          description: A single review
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: An awesome time for the whole family.
+                  rating:
+                    type: integer
+                    minimum: 1
+                    maximum: 5
+                    example: 5
+                  userId:
+                    minLength: 36
+                    maxLength: 36
+                    pattern: '^[a-zA-Z0-9-]+$'
+                    nullable: true
+                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                  uuid:
+                    minLength: 36
+                    maxLength: 36
+                    pattern: '^[a-zA-Z0-9-]+$'
+                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+        '404':
+          description: Review not found
+
+  /users:
+    post:
+      description: Create a new user
+      requestBody:
+        description: User details
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: ponelat
+                password:
+                  type: string
+                  format: password
+                fullName:
+                  type: string
+                  example: Josh Ponelat
+      responses:
+        '201':
+          description: Successfully created a new user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: ponelat
+                  uuid:
+                    type: string
+                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: https://ponelat.com/probs/invalid-body
+                  title:
+                    type: string
+                    example: Request body failed validation
+                  invalid-fields:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        path:
+                          type: string
+                          example: '#/message'
+                          description: A path representing the field, from the root of the document
+                        expected:
+                          type: string
+                          description: Human readble message describing what the expected value of the field was
+                          example: must be a string
+                        actual:
+                          type: string
+                          description: The actual value that was received by the server
+                          example: '12'
+
+  /tokens:
+    post:
+      description: Create a new token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: ponelat
+                password:
+                  type: string
+                  format: password
+
+      responses:
+        '201':
+          description: Create a new token for gaining authenticated access to resources
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+
+components:
+  securitySchemes:
+    Token:
+      name: Authorization
+      type: apiKey
+      in: header

@@ -1,14 +1,12 @@
 package reviews
 
 import (
+	"farmstall/problems"
 	"farmstall/users"
-	"fmt"
-
 	"github.com/google/uuid"
 )
 
-const EDENIEDBYCODE = "e4033"
-const ENOTFOUND = "e4040"
+const BASE_PATH = "/reviews"
 
 type UUID = string
 type ReviewMap map[UUID]Review
@@ -19,18 +17,8 @@ type Review struct {
 	User    *users.User `json:"userId"`
 }
 
-type ReviewError struct {
-	Msg  string `json:"error"`
-	Uuid UUID   `json:"uuid"`
-	Code string `json:"code"`
-}
-
 type ReviewFilters struct {
 	MaxRating int `json:"maxRating"`
-}
-
-func (e ReviewError) Error() string {
-	return fmt.Sprintf("%s: %s %s", e.Uuid, e.Msg, e.Code)
 }
 
 type Reviews struct {
@@ -41,13 +29,16 @@ type DeletedReview struct {
 	Uuid UUID `json:"uuid"`
 }
 
+func NewReviews() *Reviews {
+	rs := Reviews{Reviews: ReviewMap{}}
+	return &rs
+}
+
 func (rs *Reviews) UpdateReview(reviewId UUID, r Review) (*Review, error) {
 	if _, ok := rs.Reviews[reviewId]; !ok {
-		return nil, &ReviewError{
-			Code: EDENIEDBYCODE,
-			Msg:  "Review does not exist. Won't update. Please create new one.",
-			Uuid: reviewId,
-		}
+		return nil, problems.UpdateNonExisting(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + reviewId,
+		})
 	}
 
 	r.Uuid = reviewId
@@ -67,40 +58,37 @@ func (rs *Reviews) GetReview(id UUID) (*Review, error) {
 	var ok bool
 	review, ok = rs.Reviews[id]
 	if !ok {
-		reErr := &ReviewError{Uuid: id, Msg: "Review not found", Code: ENOTFOUND}
-		return nil, reErr
+		return nil, problems.NotFound(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + id,
+		})
 	}
 	return &review, nil
 }
 
 func (rs *Reviews) DeleteReview(id UUID) error {
 	if _, ok := rs.Reviews[id]; !ok {
-		reErr := ReviewError{Uuid: id, Msg: "Review not found", Code: ENOTFOUND}
-		return reErr
+		return problems.NotFound(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + id,
+		})
 	}
 	delete(rs.Reviews, id)
 	return nil
 }
 
-func (rs *Reviews) GetReviews() (*[]Review, error) {
+func (rs *Reviews) GetReviews() *[]Review {
 	v := make([]Review, 0, len(rs.Reviews))
 	for _, value := range rs.Reviews {
 		v = append(v, value)
 	}
-	return &v, nil
+	return &v
 }
 
-func (rs *Reviews) GetReviewsFiltered(filters ReviewFilters) (*[]Review, error) {
+func (rs *Reviews) GetReviewsFiltered(filters ReviewFilters) *[]Review {
 	v := make([]Review, 0, len(rs.Reviews))
 	for _, value := range rs.Reviews {
 		if value.Rating <= filters.MaxRating {
 			v = append(v, value)
 		}
 	}
-	return &v, nil
-}
-
-func NewReviews() *Reviews {
-	rs := Reviews{Reviews: ReviewMap{}}
-	return &rs
+	return &v
 }
