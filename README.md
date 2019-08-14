@@ -21,5 +21,7 @@ Reviews are messages ( in markdown format ), with a corresponding rating ( 1 to 
 - [x] Add token store ( assoc with user )
 - [x] Add problem+json for error responses
 
-- [] Add auth to POST /reviews and GET /reviews/{reviewId}
+- [x] Add auth to POST /reviews and GET /reviews/{reviewId}
+
+- [ ] Prevent creating a user with the same username 
 
