@@ -44,7 +44,7 @@ type TokenResponse struct {
 }
 
 func (us *Users) CreateToken(ul UserLogin, tokenOverride string) (string, error) {
-	user, userErr := us.GetFirstUserByUsername(ul.Username)
+	user, userErr := us.GetUserByUsername(ul.Username)
 	if userErr != nil {
 		return "", userErr
 	}
@@ -68,7 +68,7 @@ func (us *Users) CreateToken(ul UserLogin, tokenOverride string) (string, error)
 	return token, nil
 }
 
-func (us *Users) GetFirstUserByUsername(username string) (*User, error) {
+func (us *Users) GetUserByUsername(username string) (*User, error) {
 	var user *User
 	for _, testUser := range us.Users {
 		if testUser.Username == username {
@@ -86,7 +86,16 @@ func (us *Users) GetFirstUserByUsername(username string) (*User, error) {
 	return user, nil
 }
 
-func (us *Users) AddUser(nu NewUser) *User {
+func (us *Users) AddUser(nu NewUser) (*User, error) {
+	existingUser, _ := us.GetUserByUsername(nu.Username)
+
+	if existingUser != nil {
+		return nil, problems.CreateAlreadyExists(problems.ProblemJson{
+			Instance: BASE_PATH + "/" + nu.Username,
+			Detail:   fmt.Sprintf("User with username, %s, already exists.", nu.Username),
+		})
+	}
+
 	uuidVal := uuid.New().String()
 	u := User{
 		FullName: nu.FullName,
@@ -97,7 +106,7 @@ func (us *Users) AddUser(nu NewUser) *User {
 	us.Users[uuidVal] = u
 	us.Passwords.Add(uuidVal, nu.Password)
 
-	return &u
+	return &u, nil
 }
 
 func (us *Users) GetUser(id UUID) (*User, error) {

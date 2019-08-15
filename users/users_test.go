@@ -25,7 +25,7 @@ func TestAddOneUser(t *testing.T) {
 
 func TestAddOneUserResponse(t *testing.T) {
 	us := NewUsers()
-	user := us.AddUser(NewUser{
+	user, _ := us.AddUser(NewUser{
 		Username: "ponelat",
 		FullName: "Josh Ponelat",
 		Password: "password",
@@ -40,7 +40,7 @@ func TestAddOneUserResponse(t *testing.T) {
 
 func TestAddThenGetOneUser(t *testing.T) {
 	us := NewUsers()
-	addedUser := us.AddUser(NewUser{
+	addedUser, _ := us.AddUser(NewUser{
 		Username: "ponelat",
 		FullName: "Josh Ponelat",
 		Password: "password",
@@ -86,4 +86,23 @@ func TestCreateTokenFromUsernameAndPassword(t *testing.T) {
 
 	assert.NilError(t, err, "should have no errors")
 	assert.Assert(t, is.Len(token, 10), "should be a string ten characters long")
+}
+
+func TestCreateUserWithSameUsernameGivesError(t *testing.T) {
+	users := NewUsers()
+
+	users.AddUser(NewUser{
+		Username: "ponelat",
+		FullName: "Josh Ponelat",
+		Password: "password",
+	})
+
+	_, err := users.AddUser(NewUser{
+		Username: "ponelat",
+		FullName: "Josh Ponelat",
+		Password: "password",
+	})
+
+	assert.ErrorContains(t, err, "/create-already-exists")
+	assert.Assert(t, is.Len(users.Users, 1), "should only contain one user")
 }

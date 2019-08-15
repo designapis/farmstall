@@ -77,6 +77,16 @@ func UpdateNonExisting(pj ProblemJson) *ProblemJson {
 	}
 }
 
+func CreateAlreadyExists(pj ProblemJson) *ProblemJson {
+	return &ProblemJson{
+		Type:     "/create-already-exists",
+		Title:    "Failed to create resource, it already exists.",
+		Status:   409,
+		Detail:   pj.Detail,
+		Instance: pj.Instance,
+	}
+}
+
 func Absolutify(pj *ProblemJson, probBase string, apiBase string) ProblemJson {
 	pj.Type = probBase + pj.Type
 

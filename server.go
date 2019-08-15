@@ -248,7 +248,11 @@ func (ctx *Server) addUser() MiddlewareFn {
 			}))(w, r)
 			return
 		}
-		res := ctx.Users.AddUser(user)
+		res, createErr := ctx.Users.AddUser(user)
+		if createErr != nil {
+			ErrorResponse(createErr.(*problems.ProblemJson))(w, r)
+			return
+		}
 		writeJson(201, res)(w, r)
 	}
 }
