@@ -22,7 +22,11 @@ RUN CGO_ENABLED=0 \
 # Copy over artifacts
 FROM alpine
 COPY --from=builder /build/farmstall /app/
+
+# Assets
 COPY ./openapi.yaml /app/
+COPY ./img          /app/img
+
 WORKDIR /app
 ENV PORT 80
 EXPOSE 80
