@@ -98,6 +98,10 @@ func main() {
 	rater := stdlib.NewMiddleware(limiter.New(store, rate, limiter.WithTrustForwardHeader(true)))
 	handler = rater.Handler(handler)
 
+	// Static files
+	fsImg := http.FileServer(http.Dir("img"))
+	http.Handle("/img/", http.StripPrefix("/img/", fsImg))
+
 	// Final handler
 	http.Handle("/", handler)
 
