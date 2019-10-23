@@ -1,0 +1,17 @@
+:server = http://localhost:3001
+:spa = http://localhost:3000
+
+:spa = http://localhost:4000
+
+# GET
+GET :server/health
+
+# GET
+GET :spa/health
+
+# POST
+POST :spa/debug?foo=1
+content-type: application/json
+X-JOSH: true
+
+{"bar": 2}
