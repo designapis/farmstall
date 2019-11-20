@@ -3,6 +3,7 @@ package reviews
 import (
 	"testing"
 
+	"encoding/json"
 	"github.com/google/uuid"
 	"gotest.tools/assert"
 	is "gotest.tools/assert/cmp"
@@ -163,4 +164,17 @@ func TestGetReviewsByMaxRatingEquals(t *testing.T) {
 	allReviews := reviews.GetReviewsFiltered(filters)
 
 	assert.Assert(t, is.Len(*allReviews, 1), "should equal one, for the review with rating 1")
+}
+
+func TestAnonymousReviewHasNullForUserID(t *testing.T) {
+
+	reviews := NewReviews()
+	review, _ := reviews.AddReview(Review{
+		Message: "good",
+		Rating:  5,
+	})
+
+	jsonBytes, _ := json.Marshal(review)
+
+	assert.Assert(t, is.Contains(string(jsonBytes), `"userId":null`), "should equal null when serialized in JSON")
 }

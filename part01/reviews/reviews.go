@@ -1,31 +1,33 @@
 package reviews
 
 import (
+	"encoding/json"
 	"farmstall/problems"
+	"farmstall/utils"
 	"github.com/google/uuid"
+	_ "log"
 )
 
 const BASE_PATH = "/reviews"
 
-type UUID = string
-type ReviewMap map[UUID]Review
+type ReviewMap map[string]Review
+
 type Review struct {
-	Uuid    UUID   `json:"uuid"`
 	Message string `json:"message"`
 	Rating  int    `json:"rating"`
-	UserID  UUID   `json:"userId"`
+	Uuid    string `json:"uuid"`
+	UserID  string `json:"-"`
 }
-
 type ReviewFilters struct {
 	MaxRating int `json:"maxRating"`
 }
 
 type Reviews struct {
-	Reviews map[UUID]Review `json:"reviews"`
+	Reviews map[string]Review `json:"reviews"`
 }
 
 type DeletedReview struct {
-	Uuid UUID `json:"uuid"`
+	Uuid string `json:"uuid"`
 }
 
 func NewReviews() *Reviews {
@@ -33,7 +35,7 @@ func NewReviews() *Reviews {
 	return &rs
 }
 
-func (rs *Reviews) UpdateReview(reviewId UUID, r Review) (*Review, error) {
+func (rs *Reviews) UpdateReview(reviewId string, r Review) (*Review, error) {
 	if _, ok := rs.Reviews[reviewId]; !ok {
 		return nil, problems.UpdateNonExisting(problems.ProblemJson{
 			Instance: BASE_PATH + "/" + reviewId,
@@ -52,7 +54,7 @@ func (rs *Reviews) AddReview(r Review) (*Review, error) {
 	return &r, nil
 }
 
-func (rs *Reviews) GetReview(id UUID) (*Review, error) {
+func (rs *Reviews) GetReview(id string) (*Review, error) {
 	var review Review
 	var ok bool
 	review, ok = rs.Reviews[id]
@@ -64,7 +66,7 @@ func (rs *Reviews) GetReview(id UUID) (*Review, error) {
 	return &review, nil
 }
 
-func (rs *Reviews) DeleteReview(id UUID) error {
+func (rs *Reviews) DeleteReview(id string) error {
 	if _, ok := rs.Reviews[id]; !ok {
 		return problems.NotFound(problems.ProblemJson{
 			Instance: BASE_PATH + "/" + id,
@@ -90,4 +92,39 @@ func (rs *Reviews) GetReviewsFiltered(filters ReviewFilters) *[]Review {
 		}
 	}
 	return &v
+}
+
+// JSON marshal/unmarshal
+// Allows for UserID to be null
+
+type ReviewAlias Review
+type ReviewJSON struct {
+	ReviewAlias
+	UserID utils.NullString `json:"userId"`
+}
+
+func NewReviewJSON(r Review) ReviewJSON {
+	rj := ReviewJSON{}
+	rj.ReviewAlias = ReviewAlias(r)
+	rj.UserID = utils.NullString(r.UserID)
+	return rj
+}
+
+func (rj ReviewJSON) toObj() Review {
+	r := Review(rj.ReviewAlias)
+	r.UserID = string(rj.UserID)
+	return r
+}
+
+func (r Review) MarshalJSON() ([]byte, error) {
+	return json.Marshal(NewReviewJSON(r))
+}
+
+func (r *Review) UnmarshalJSON(data []byte) error {
+	var rj ReviewJSON
+	if err := json.Unmarshal(data, &rj); err != nil {
+		return err
+	}
+	*r = rj.toObj()
+	return nil
 }

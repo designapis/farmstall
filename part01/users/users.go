@@ -10,25 +10,24 @@ import (
 	"time"
 )
 
-type UUID = string
-type UserMap map[UUID]User
+type UserMap map[string]User
 
 const BASE_PATH = "/users"
 
 type User struct {
-	Uuid     UUID   `json:"uuid"`
+	Uuid     string `json:"uuid"`
 	Username string `json:"username"`
 	FullName string `json:"fullName"`
 }
 
 type Users struct {
-	Users     map[UUID]User `json:"users"`
+	Users     map[string]User `json:"users"`
 	Passwords *passwords.PasswordStore
-	Tokens    map[UUID]string
+	Tokens    map[string]string
 }
 
 type NewUser struct {
-	Uuid     UUID   `json:"uuid"`
+	Uuid     string `json:"uuid"`
 	Username string `json:"username"`
 	FullName string `json:"fullName"`
 	Password string `json:"password"`
@@ -109,7 +108,7 @@ func (us *Users) AddUser(nu NewUser) (*User, error) {
 	return &u, nil
 }
 
-func (us *Users) GetUser(id UUID) (*User, error) {
+func (us *Users) GetUser(id string) (*User, error) {
 	var user User
 	var ok bool
 	user, ok = us.Users[id]
@@ -122,7 +121,7 @@ func (us *Users) GetUser(id UUID) (*User, error) {
 	return &user, nil
 }
 
-func (us *Users) DeleteUser(id UUID) error {
+func (us *Users) DeleteUser(id string) error {
 	if _, ok := us.Users[id]; !ok {
 		return problems.NotFound(problems.ProblemJson{
 			Instance: BASE_PATH + "/" + id,
@@ -158,7 +157,7 @@ func NewUsers() *Users {
 	us := Users{
 		Users:     UserMap{},
 		Passwords: passwords.NewPasswordStore(),
-		Tokens:    make(map[UUID]string),
+		Tokens:    make(map[string]string),
 	}
 	return &us
 }
