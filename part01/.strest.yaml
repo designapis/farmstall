@@ -1,0 +1,93 @@
+version: 2
+
+variables:
+  reviewMessage: <$ Faker("lorem.sentence", 10) $>
+
+requests:
+
+  getReviews:
+    request:
+      url: <$ Env("URL") $>/v1/reviews
+      method: GET
+    validate:
+    - jsonpath: status
+      expect: 200
+
+  createReview:
+    request:
+      url: <$ Env("URL") $>/v1/reviews
+      method: POST
+      postData:
+        mimeType: application/json
+        text:
+          message: <$ reviewMessage $>
+          rating: 5
+    validate:
+    - jsonpath: status
+      expect: 201
+    - jsonpath: content.userId
+      jsonschema:
+        type: 'null'
+    - jsonpath: content.message
+      expect: <$ reviewMessage $>
+
+  getReviewFromCreateReview:
+    request:
+      url: <$ Env("URL") $>/v1/reviews/<$ createReview.content.uuid $>
+      method: GET
+    validate:
+    - jsonpath: content.message
+      expect: <$ reviewMessage $>
+
+  getReviewMissing:
+    request:
+      url: <$ Env("URL") $>/v1/reviews/f7f680a8-d111-421f-b6b3-493ebf905078
+      method: GET
+    validate:
+    - jsonpath: status
+      expect: 404
+
+  #
+  createUser:
+    request:
+      url: <$ Env("URL") $>/v1/users
+      method: POST
+      postData:
+        mimeType: application/json
+        text:
+          fullName: <$ Faker("name.firstName") $>
+          username: <$ Faker("name.firstName") $>
+          password: password
+    validate:
+    - jsonpath: status
+      expect: 201
+
+  createToken:
+    request:
+      url: <$ Env("URL") $>/v1/tokens
+      method: POST
+      postData:
+        mimeType: application/json
+        text:
+          username: <$ createUser.content.username $>
+          password: password
+    validate:
+    - jsonpath: status
+      expect: 201
+
+
+  createReviewAsUser:
+    request:
+      url: <$ Env("URL") $>/v1/reviews
+      method: POST
+      headers:
+        - name: Authorization
+          value: <$ createToken.content.token $>
+      postData:
+        mimeType: application/json
+        text:
+          message: <$ Faker("lorem.sentence", 10) $>
+          rating: 5
+    validate:
+    - jsonpath: content.userId
+      expect: <$ createUser.content.uuid $>
