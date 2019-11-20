@@ -7,7 +7,7 @@ RUN mkdir /build
 ADD ./go.mod /build/
 ADD ./go.sum /build/
 WORKDIR /build
-RUN CGO_ENABLED=0 GOOS=linux go get
+RUN CGO_ENABLED=0 GOOS=linux go mod download
 
 # Build
 ADD . /build/
