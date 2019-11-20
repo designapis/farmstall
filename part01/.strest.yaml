@@ -1,7 +1,7 @@
 version: 2
 
 variables:
-  reviewMessage: <$ Faker("lorem.sentence", 10) $>
+  reviewMessage: test was good
 
 requests:
 
