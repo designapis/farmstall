@@ -17,6 +17,7 @@ import (
 	"farmstall/openapi"
 	"farmstall/problems"
 	"farmstall/reviews"
+	"farmstall/spa"
 	"farmstall/users"
 
 	"github.com/gorilla/mux"
@@ -89,6 +90,9 @@ func main() {
 		AllowOriginFunc:  func(origin string) bool { return true },
 	})
 
+	spa := spa.SpaHandler{StaticPath: "./site/build", IndexPath: "index.html"}
+	m.PathPrefix("/").Handler(spa)
+
 	// Wrap in CORS
 	handler := c.Handler(m)
 
@@ -158,7 +162,9 @@ func (ctx *Server) validateRequestMiddleware(next http.Handler) http.Handler {
 		route, pathParams, errOp := router.FindRoute(r.Method, r.URL)
 
 		if errOp != nil {
-			log.Fatalf("Operation not found for %s %s. Error: %s", r.Method, r.URL, errOp)
+			log.Printf("Operation not found for %s %s. Error: %s", r.Method, r.URL, errOp)
+			next.ServeHTTP(w, r)
+			return
 		}
 
 		// Validate request against operation
@@ -326,11 +332,6 @@ func (ctx *Server) getReviews() MiddlewareFn {
 		var reviewList *[]reviews.Review
 		if maxRating != "" {
 			i, _ := strconv.Atoi(maxRating)
-
-			// if i <= 0 || i > 5 {
-			// 	ErrorResponse(404, "Query parameter 'maxRating' should only be a whole number between 1 and 5 inclusive")(w, r)
-			// 	return
-			// }
 
 			filters := reviews.ReviewFilters{
 				MaxRating: i,

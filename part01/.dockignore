@@ -5,3 +5,6 @@
 !reviews/*.go
 !go.mod
 !go.sum
+
+# UI
+!site/build/

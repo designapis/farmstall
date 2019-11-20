@@ -24,8 +24,9 @@ FROM alpine
 COPY --from=builder /build/farmstall /app/
 
 # Assets
-COPY ./openapi.yaml /app/
-COPY ./img          /app/img
+COPY ./openapi.yaml  /app/
+COPY ./img           /app/img
+COPY ./site/build    /app/site/build
 
 WORKDIR /app
 ENV PORT 80
