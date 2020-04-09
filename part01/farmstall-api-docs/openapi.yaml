@@ -4,7 +4,7 @@ info:
   title: FarmStall API
   description: |-
 
-    An API for writing reviews about your favourite ( or worst ) farm stalls.
+    An API for writing reviews about your favourite (or worst) farm stalls.
 
     ![Picture of produce](https://farmstall.ponelat.com/img/produce-banner.jpg)
 
@@ -12,11 +12,11 @@ info:
 
     # Auth
 
-    To create **Reviews** without being _anonymous_. You need to add a **UserToken** to the `Authorization` header.
+    To create **Reviews** without being _anonymous_. You need to add a **MyUserToken** to the `Authorization` header.
 
-    To get a **UserToken**:
+    To get a **MyUserToken**:
     1. Create a **User** with [POST /users](#Users/post_users)
-    1. Get a **UserToken** by calling [POST /tokens](#Users/post_tokens) with your **User** credentials.
+    1. Get a **MyUserToken** by calling [POST /tokens](#Users/post_tokens) with your **User** credentials.
 
     # Reviews
     Reviews are the heart of this API. <br/>
@@ -105,7 +105,7 @@ paths:
       - Reviews
       description: Create a new Review
       security:
-      - UserToken: []
+      - MyUserToken: []
       requestBody:
         content:
           application/json:
@@ -262,7 +262,7 @@ paths:
 
 components:
   securitySchemes:
-    UserToken:
+    MyUserToken:
       name: Authorization
       type: apiKey
       in: header
