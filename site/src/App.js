@@ -46,7 +46,7 @@ function App() {
           <h2> About the API </h2>
 
           <ul>
-            <li> The API is hosted on https://farmstall.ponelat.com/v1 </li>
+            <li> The API is hosted on https://farmstall.designapis.com/v1 </li>
             <li> The documentation of the API is a series of exercises  within the book, written as an OpenAPI (3.x) definition and described using Swagger tooling. </li>
             <li>
               The stages of the API definition can be found in <a href={SHUB_LINK}> SwaggerHub ( where I work ) </a>

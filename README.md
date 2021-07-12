@@ -3,7 +3,7 @@ FarmStall API
 
 *This is a contrived API* As part of the ongoing Swagger In Action book by Manning.
 
-The API is hosted at https://farmstall.ponelat.com/v1
+The API is hosted at https://farmstall.designapis.com/v1
 
 ## FarmStall API
 

@@ -6,7 +6,7 @@ info:
 
     An API for writing reviews about your favourite (or worst) farm stalls.
 
-    ![Picture of produce](https://farmstall.ponelat.com/img/produce-banner.jpg)
+    ![Picture of produce](https://farmstall.designapis.com/img/produce-banner.jpg)
 
     ---
 
@@ -32,20 +32,20 @@ info:
 
       "A wonderful time!" &mdash; Bob McNally
       <br/>
-      ![5 stars](https://farmstall.ponelat.com/img/rating-5.png)
+      ![5 stars](https://farmstall.designapis.com/img/rating-5.png)
 
       "An awful place" &mdash; _Anonymous_
       <br/>
-      ![1 star](https://farmstall.ponelat.com/img/rating-1.png)
+      ![1 star](https://farmstall.designapis.com/img/rating-1.png)
 
       "A totally average place." &mdash; Jane Fair
       <br/>
-      ![3 stars](https://farmstall.ponelat.com/img/rating-3.png)
+      ![3 stars](https://farmstall.designapis.com/img/rating-3.png)
 
   contact:
     name: Josh Ponelat
     email: jponelat@gmail.com
-    url: https://ponelat.com/contact
+    url: https://designapis.com/contact
 
   license:
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -63,7 +63,7 @@ tags:
     description: Users and authentication
 
 servers:
-- url: 'https://farmstall.ponelat.com/v1'
+- url: 'https://farmstall.designapis.com/v1'
 
 paths:
   /reviews:

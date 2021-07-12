@@ -46,7 +46,7 @@ func main() {
 	}
 
 	if FQDN == "" {
-		FQDN = "https://farmstall.ponelat.com"
+		FQDN = "https://farmstall.designapis.com"
 	}
 
 	// Set global
