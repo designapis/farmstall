@@ -1,0 +1,177 @@
+{
+  "postman": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "date": "Tue, 19 Nov 2019 10:56:48 GMT",
+      "etag": "W/\"d4-QlMol0VXfJTFfBy/PEt73imNmmo\"",
+      "server": "nginx",
+      "set-cookie": [
+        "sails.sid=s%3AdknW-DeYjqkVMqXb-3AcVzlclNXdvDw2.MGwWX25Hx60bqgIWAROsmetQgIhWRLkrTB32C3wrxLI; Path=/; HttpOnly"
+      ],
+      "vary": "Accept-Encoding",
+      "content-length": "212",
+      "connection": "Close"
+    },
+    "content": {
+      "args": {},
+      "headers": {
+        "x-forwarded-proto": "https",
+        "host": "postman-echo.com",
+        "accept": "application/json, text/plain, */*",
+        "user-agent": "axios/0.18.1",
+        "x-forwarded-port": "443"
+      },
+      "url": "https://postman-echo.com/get"
+    }
+  },
+  "getReviews": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "34",
+      "x-ratelimit-reset": "1574161293",
+      "date": "Tue, 19 Nov 2019 11:01:26 GMT",
+      "content-length": "418",
+      "connection": "close"
+    },
+    "content": [
+      {
+        "message": "Was awesome!",
+        "rating": 5,
+        "uuid": "8e1bf975-919e-4055-a7b2-d9d4713a6646",
+        "userId": null
+      },
+      {
+        "message": "Was okay.",
+        "rating": 3,
+        "uuid": "90ac6603-b536-4cd4-9179-2af9184931a5",
+        "userId": null
+      },
+      {
+        "message": "Was terrible.",
+        "rating": 1,
+        "uuid": "81496004-4082-417c-a186-e18bb8e2d363",
+        "userId": null
+      },
+      {
+        "message": "hello",
+        "rating": 5,
+        "uuid": "1ea80241-386a-44bf-b52d-4a8d15cccce7",
+        "userId": "81109b7e-356d-4e0d-a3f6-00769a821ddd"
+      }
+    ]
+  },
+  "getRevi/ews": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "33",
+      "x-ratelimit-reset": "1574161293",
+      "date": "Tue, 19 Nov 2019 11:01:33 GMT",
+      "content-length": "418",
+      "connection": "close"
+    },
+    "content": [
+      {
+        "message": "Was awesome!",
+        "rating": 5,
+        "uuid": "8e1bf975-919e-4055-a7b2-d9d4713a6646",
+        "userId": null
+      },
+      {
+        "message": "Was okay.",
+        "rating": 3,
+        "uuid": "90ac6603-b536-4cd4-9179-2af9184931a5",
+        "userId": null
+      },
+      {
+        "message": "Was terrible.",
+        "rating": 1,
+        "uuid": "81496004-4082-417c-a186-e18bb8e2d363",
+        "userId": null
+      },
+      {
+        "message": "hello",
+        "rating": 5,
+        "uuid": "1ea80241-386a-44bf-b52d-4a8d15cccce7",
+        "userId": "81109b7e-356d-4e0d-a3f6-00769a821ddd"
+      }
+    ]
+  },
+  "GET /reviews": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "server": "nginx/1.17.5",
+      "date": "Wed, 20 Nov 2019 09:28:38 GMT",
+      "content-type": "application/json",
+      "content-length": "465",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "35",
+      "x-ratelimit-reset": "1574242178"
+    },
+    "content": [
+      {
+        "uuid": "d360aeca-f6b5-40df-a8d9-1fff0857e5a9",
+        "message": "Was awesome!",
+        "rating": 5,
+        "userId": ""
+      },
+      {
+        "uuid": "45a08e39-75b5-4bbc-b458-c25596369e26",
+        "message": "Was okay.",
+        "rating": 3,
+        "userId": ""
+      },
+      {
+        "uuid": "49f8dd1f-c0ef-418e-8325-7bebc1608abf",
+        "message": "Was terrible.",
+        "rating": 1,
+        "userId": ""
+      },
+      {
+        "uuid": "225a7acf-9283-4d22-93a4-18e994921015",
+        "message": " haha",
+        "rating": 4,
+        "userId": ""
+      },
+      {
+        "uuid": "d3bbfa53-0463-4349-bf42-0158b6c9d71b",
+        "message": " haha",
+        "rating": 4,
+        "userId": ""
+      }
+    ]
+  },
+  "POST /reviews": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "server": "nginx/1.17.5",
+      "date": "Wed, 20 Nov 2019 09:28:38 GMT",
+      "content-type": "application/json",
+      "content-length": "91",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "34",
+      "x-ratelimit-reset": "1574242178"
+    },
+    "content": {
+      "uuid": "543cc8ec-20e9-44c6-bd0f-e8b86b616a67",
+      "message": "was good",
+      "rating": 5,
+      "userId": ""
+    }
+  }
+}

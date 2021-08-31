@@ -1,0 +1,72 @@
+:server = https://farmstall.ponelat.com
+:api = :server/v1
+
+:server = http://localhost:8080
+:api = http://localhost:8080/v1
+
+# Ping
+GET :server/health
+Origin: bob.com
+
+# Openapi (yaml)
+GET :server/openapi.yaml
+# Openapi forced (json)
+GET :server/openapi.json
+# Openapi forced (yaml)
+GET :server/openapi.yaml
+accept: application/json
+
+# Openapi (yaml)
+GET :server/openapi
+accept: application/yaml
+# Openapi (yaml)
+GET :server/openapi
+accept: application/json
+
+# Redirect
+GET :server/json-business-card
+
+# addReview
+:message := "hello"
+:number  := 5
+:token := "hV1WKkftFW"
+
+POST :api/reviews
+content-type: application/json
+Authorization: :token
+
+{"message": ":message", "rating": :number}
+
+
+# Create review as user
+:message := (nth (random 5) '("Was okay." "Was awesome!" "Totally average." "Aweful." "Fantastic!"))
+:number  := (+ 1(random 4))
+POST :api/reviews
+content-type: application/json
+
+{"message": ":message", "rating": :number}
+
+# getReviews
+GET :api/reviews
+
+:id = 3b5b1707-b82c-4b1d-9078-157053902525
+# deleteReview
+DELETE :api/reviews/:id
+
+# Update Review
+PUT :api/reviews/:id
+content-type: application/json
+
+{"fake": true, "uuid": "wat", "message": "Bolls", "rating": 4}
+
+# Create User
+POST :api/users
+content-type: application/json
+
+{"username": "josh", "password": "string", "fullName": "Josh"}
+
+# Create Token
+POST :api/tokens
+content-type: application/json
+
+{"username": "josh", "password": "string"}

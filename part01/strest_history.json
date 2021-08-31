@@ -1,0 +1,1122 @@
+{
+  "GET /reviews": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "27",
+      "x-ratelimit-reset": "1574242617",
+      "date": "Wed, 20 Nov 2019 09:36:53 GMT",
+      "content-length": "381",
+      "connection": "close"
+    },
+    "content": [
+      {
+        "message": "was good",
+        "rating": 5,
+        "userId": null
+      },
+      {
+        "message": "",
+        "rating": 5,
+        "userId": null
+      },
+      {
+        "message": "was good",
+        "rating": 5,
+        "userId": null
+      },
+      {
+        "message": "ok",
+        "rating": 0,
+        "userId": null
+      },
+      {
+        "message": "Was awesome!",
+        "rating": 5,
+        "userId": null
+      },
+      {
+        "message": "Was okay.",
+        "rating": 3,
+        "userId": null
+      },
+      {
+        "message": "Was terrible.",
+        "rating": 1,
+        "userId": null
+      },
+      {
+        "message": "was good",
+        "rating": 5,
+        "userId": null
+      }
+    ]
+  },
+  "POST /reviews": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "26",
+      "x-ratelimit-reset": "1574242617",
+      "date": "Wed, 20 Nov 2019 09:36:53 GMT",
+      "content-length": "47",
+      "connection": "close"
+    },
+    "content": {
+      "message": "was good",
+      "rating": 5,
+      "userId": null
+    }
+  },
+  "POST /reviews Missing 'message'": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "25",
+      "x-ratelimit-reset": "1574242617",
+      "date": "Wed, 20 Nov 2019 09:36:53 GMT",
+      "content-length": "39",
+      "connection": "close"
+    },
+    "content": {
+      "message": "",
+      "rating": 0,
+      "userId": null
+    }
+  },
+  "getReviews": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:43:37 GMT",
+      "content-type": "application/json",
+      "transfer-encoding": "chunked",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "34",
+      "x-ratelimit-reset": "1616233452"
+    },
+    "content": [
+      {
+        "message": "Super!",
+        "rating": 5,
+        "uuid": "0896d221-81e8-4a87-9b1b-8b8d74f37544",
+        "userId": "94e5375e-7aab-42b7-bc40-5e8852826d85"
+      },
+      {
+        "message": "Awesome",
+        "rating": 4,
+        "uuid": "b3516bdf-055b-4f46-9432-63592a791878",
+        "userId": null
+      },
+      {
+        "message": "akkdio Was 2 pretty good.",
+        "rating": 4,
+        "uuid": "d7da6380-306c-4b55-b249-2ab1d23e4a75",
+        "userId": null
+      },
+      {
+        "message": "Good Experience",
+        "rating": 4,
+        "uuid": "cea2ca7c-e6cf-4809-91f7-a423a618b481",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "e8bc0f4e-45e6-4bd4-b042-c636b8cecfe5",
+        "userId": null
+      },
+      {
+        "message": "My Favorite pet is hoopla",
+        "rating": 5,
+        "uuid": "0ce04755-c046-414c-b37d-08d41eee4021",
+        "userId": "951a5aa5-46e9-4bb3-87b5-b7d98be6cf41"
+      },
+      {
+        "message": "That was Fantastic!",
+        "rating": 5,
+        "uuid": "e7894bb4-acba-4705-bf4f-8422f355ab2a",
+        "userId": null
+      },
+      {
+        "message": "That was Fantastic!",
+        "rating": 5,
+        "uuid": "55369bed-12d5-45e6-80c9-c78ca7933bcb",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience",
+        "rating": 4,
+        "uuid": "16593ebc-1409-42b5-b334-0a5441a1eefc",
+        "userId": null
+      },
+      {
+        "message": "Not very good",
+        "rating": 4,
+        "uuid": "109fe385-d07e-4a0f-8d8e-67aca3ada25d",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "24d16508-9934-4694-97e2-afa5e1baa3dc",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "89a323e1-e25b-45f4-8cf1-502348af356b",
+        "userId": null
+      },
+      {
+        "message": "***** ***",
+        "rating": 1,
+        "uuid": "1a7827e7-2f32-49a7-bb74-4b3f61808e14",
+        "userId": "de258962-6c65-488e-9db9-6a87d22a32a0"
+      },
+      {
+        "message": "Was so so.",
+        "rating": 2,
+        "uuid": "5e4ed33f-7875-4ca0-9374-7adabe85023b",
+        "userId": null
+      },
+      {
+        "message": "Blew my mind, life won't be the same after this.",
+        "rating": 5,
+        "uuid": "6e41f886-350a-44b6-bc6c-c641e376ebee",
+        "userId": "ec1ccba2-c3f2-41f1-beb1-02cac554de96"
+      },
+      {
+        "message": "Totally Awesome",
+        "rating": 5,
+        "uuid": "6fd88eb6-173a-471e-8f42-112741473a5f",
+        "userId": "null"
+      },
+      {
+        "message": "Disappointing. Wanted to buy a new farmer, but they didn't sell any. Total scam!",
+        "rating": 1,
+        "uuid": "57541d8f-26ab-4745-87ea-8746ff4bd611",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 3,
+        "uuid": "21da3ffd-2b6f-4bbc-9d4f-3388b9082473",
+        "userId": null
+      },
+      {
+        "message": "Pretty dang cool.",
+        "rating": 4,
+        "uuid": "5725c59c-b682-4fe7-820b-8b7c2f56f90a",
+        "userId": null
+      },
+      {
+        "message": "Quit interessting.",
+        "rating": 4,
+        "uuid": "111c3735-6a08-4b36-9f8f-bcc5b67439da",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good - my dear.",
+        "rating": 4,
+        "uuid": "b02500ef-6839-4a26-94ba-9de398c8dbe2",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "c3b38e8e-b309-4e35-a463-4f4f94cc438c",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "bd95df13-1844-42f9-bc1a-bc87ed006ab3",
+        "userId": null
+      },
+      {
+        "message": "Totally awesome",
+        "rating": 5,
+        "uuid": "061bf27e-3629-4739-b676-a2bf6ded4df7",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "be2f72c0-cc6a-4019-b814-7d308bb08a5c",
+        "userId": null
+      },
+      {
+        "message": "neckbeard",
+        "rating": 5,
+        "uuid": "da1612d6-c8f2-4602-b7b2-a7578f24102d",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "e2f8d0eb-5bdd-4f4d-873a-9f4155d922d9",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "3e7c0e62-999d-4c61-9d09-4e563d331b9b",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "e8c6ff02-31ce-4889-9563-135f64fc0069",
+        "userId": null
+      },
+      {
+        "message": "was disastrous",
+        "rating": 1,
+        "uuid": "44dcde0e-e225-4bea-88aa-4fa2d6329e9f",
+        "userId": null
+      },
+      {
+        "message": "A great, authorized time",
+        "rating": 4,
+        "uuid": "222f3aea-1ae4-4cfa-a245-0e46aa8cbb2a",
+        "userId": "64ec1321-967b-413c-8c21-1f4ada537dfb"
+      },
+      {
+        "message": "was disastrous",
+        "rating": 1,
+        "uuid": "2c288c59-d56c-4fd4-9532-8ea65be127fe",
+        "userId": null
+      },
+      {
+        "message": "Was okay.",
+        "rating": 3,
+        "uuid": "4a7df412-8fcb-486f-b29d-cef3b5cb2d7b",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience with to",
+        "rating": 4,
+        "uuid": "b422f452-7fc9-4ef7-8da6-02476ba6b9d1",
+        "userId": "1ca776f8-b6af-4d50-942f-6eefe1c3c69d"
+      },
+      {
+        "message": "Utter foolishness.",
+        "rating": 4,
+        "uuid": "08152c9f-6a6f-4ca9-8714-7bc46acc9110",
+        "userId": null
+      },
+      {
+        "message": "akkdio Was pretty good.",
+        "rating": 4,
+        "uuid": "9ca20b74-1ff4-4d5c-8f7a-a322b125fd79",
+        "userId": null
+      },
+      {
+        "message": "akkdio Was pretty good.",
+        "rating": 4,
+        "uuid": "9b69a42a-56fb-4e68-a7ca-a3b2e9f77158",
+        "userId": null
+      },
+      {
+        "message": "***** *** x3",
+        "rating": 1,
+        "uuid": "78559710-8182-42bc-807d-ee322ba2f450",
+        "userId": "de258962-6c65-488e-9db9-6a87d22a32a0"
+      },
+      {
+        "message": "neckbeard",
+        "rating": 5,
+        "uuid": "f305da47-67d4-457d-bc29-49bd81a22da6",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "80e60d0a-06da-44fb-977a-bef2523ee8d4",
+        "userId": null
+      },
+      {
+        "message": "It's goood",
+        "rating": 5,
+        "uuid": "1ac78eb1-b4a3-44d3-86b7-ea54fcc6f12c",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience with token",
+        "rating": 4,
+        "uuid": "000ec123-b50f-4e18-8646-31fb58c9cf25",
+        "userId": "1ca776f8-b6af-4d50-942f-6eefe1c3c69d"
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "4632ce3d-f2df-44f5-812c-335f08ca094e",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "6b557d1e-d956-4f1e-9771-b81cd8f1fe57",
+        "userId": null
+      },
+      {
+        "message": "Blew my mind, life won't be the same after this.",
+        "rating": 5,
+        "uuid": "36466eb6-867c-441b-9bcb-62453fab74b6",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience with tokennnn",
+        "rating": 4,
+        "uuid": "09964e04-1ecb-4a9e-a387-3fa9e695fcc6",
+        "userId": "1ca776f8-b6af-4d50-942f-6eefe1c3c69d"
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "a3afcef1-90e9-42dc-8ecc-85a3f21c4701",
+        "userId": "anatoly"
+      },
+      {
+        "message": "***** ***",
+        "rating": 1,
+        "uuid": "71e3473b-f7ec-4384-8b1f-7adeddc754fb",
+        "userId": null
+      },
+      {
+        "message": "monsss",
+        "rating": 2,
+        "uuid": "6a2b3c77-27d3-4452-91c1-1d6f92b0f557",
+        "userId": null
+      },
+      {
+        "message": "Totally awesome",
+        "rating": 5,
+        "uuid": "b0f9a2ed-a8cd-4fa5-9fd0-a68d51820b02",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "74fe49c7-73b5-4a43-afce-18fa7d59af35",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "9984eea3-0269-41e6-8b97-8d277a74bdce",
+        "userId": "19ab2a01-de39-40ec-9159-f559129ba0b2"
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "22b5035a-cca6-4f28-815f-11d561b5b45f",
+        "userId": "cc766223-25dd-43b2-9c09-08ca780121d3"
+      },
+      {
+        "message": "Test of the create and Get a review functionality",
+        "rating": 2,
+        "uuid": "f7eb48bc-0529-4d1a-b26e-2ab318010102",
+        "userId": null
+      },
+      {
+        "message": "Greetings from Germany",
+        "rating": 5,
+        "uuid": "8cc9fdb3-a8d7-438d-a102-22e5666e2e1d",
+        "userId": null
+      },
+      {
+        "message": "Super duper.",
+        "rating": 5,
+        "uuid": "0fb16ae9-3e9b-474a-ac31-454a2f00296b",
+        "userId": "ab496e3f-5361-4caa-8785-1dc33e82215f"
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "c4573939-b67f-4c7c-a7a5-056a5fd2193a",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 5,
+        "uuid": "13062163-ab75-41b9-96a0-4a8c70382de9",
+        "userId": null
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "754c9668-5fa2-4839-b5aa-7d1f23665a9d",
+        "userId": null
+      },
+      {
+        "message": "Was terrible.",
+        "rating": 1,
+        "uuid": "8426573a-35d3-466d-b4ca-e90c9d5a7c7c",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "62355627-1770-4520-a6fd-104171e0871d",
+        "userId": null
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "1115751e-bc31-446c-8872-162b09b19412",
+        "userId": null
+      },
+      {
+        "message": "Really noice",
+        "rating": 4,
+        "uuid": "10d61040-127d-4c44-8e52-6a6c33c37a08",
+        "userId": "3b5b1707-b82c-4b1d-9078-157053902525"
+      },
+      {
+        "message": "It was a great experience",
+        "rating": 4,
+        "uuid": "87b927ae-ffe9-4b9f-893e-6df6b3460017",
+        "userId": null
+      },
+      {
+        "message": "My Favorite pet is hoopla",
+        "rating": 5,
+        "uuid": "5a8b85af-44cc-404f-88d3-43dcd5badc27",
+        "userId": "null"
+      },
+      {
+        "message": "Totally awesome",
+        "rating": 5,
+        "uuid": "1566459d-331a-4a76-946c-0fc8958e856d",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "885eb7fe-7ae1-467d-bd06-f003068feedb",
+        "userId": null
+      },
+      {
+        "message": "***** ***",
+        "rating": 1,
+        "uuid": "32408c54-b3d3-4628-8100-d433c61eb1ab",
+        "userId": "de258962-6c65-488e-9db9-6a87d22a32a0"
+      },
+      {
+        "message": "Excellent",
+        "rating": 5,
+        "uuid": "7890d069-de72-42ad-ae5c-abf0c5f01851",
+        "userId": null
+      },
+      {
+        "message": "AAA BBB CCC QQQ",
+        "rating": 5,
+        "uuid": "ea8d71d5-07b3-47b6-9d2e-096ae6ca98d7",
+        "userId": null
+      },
+      {
+        "message": "string",
+        "rating": 4,
+        "uuid": "f9c6241a-bb81-466a-af51-15bd0f257fa3",
+        "userId": "string"
+      },
+      {
+        "message": "Was good enough",
+        "rating": 4,
+        "uuid": "437c6b1d-ad8c-45e5-ae98-fc0001119d08",
+        "userId": null
+      },
+      {
+        "message": "So smooth; so suave",
+        "rating": 5,
+        "uuid": "f8b25315-1da3-4cd4-a592-92036715311e",
+        "userId": "8d697244-721e-4068-be50-94289d1e6c5d"
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "1f155b91-b676-4fdf-ba1e-e0cbb3e4ffdc",
+        "userId": "de258962-6c65-488e-9db9-6a87d22a32a0"
+      },
+      {
+        "message": "hi",
+        "rating": 2,
+        "uuid": "0de994a2-2ca2-41ea-ae73-9c0d0d5e1699",
+        "userId": "3"
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "8c731686-c26e-45ef-8777-b605865b6814",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good Arty was here.",
+        "rating": 4,
+        "uuid": "fee93a02-0216-4a14-82f7-3bccd8945e44",
+        "userId": null
+      },
+      {
+        "message": "***** *** 6x",
+        "rating": 1,
+        "uuid": "ae469652-fc4b-4a29-90aa-96b929f72bd8",
+        "userId": "de258962-6c65-488e-9db9-6a87d22a32a0"
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "fa1188ac-3b14-42e0-8777-916172911535",
+        "userId": "2a88bafb-8448-4f56-b57c-3494554d8b8a"
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "16bf07d3-1017-4d52-a172-a5f1a3a7ed30",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "12a8514b-bfe2-43a0-8a1c-d6645ac1d38f",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "0db1b8d0-db42-49e9-b16f-7233f8527baf",
+        "userId": null
+      },
+      {
+        "message": "Nouvelles des derniers instants.",
+        "rating": 4,
+        "uuid": "f07c5c62-589e-4664-81c3-a9a8cce8c53d",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "5ad7e1b7-3b2b-484e-8d72-a65bcac394f2",
+        "userId": null
+      },
+      {
+        "message": "Brilliant,FAB",
+        "rating": 5,
+        "uuid": "7372cac6-f759-4874-bc91-6bc1fb36f3f3",
+        "userId": "1c969287-155c-4db2-b3e7-2497bfb0add3"
+      },
+      {
+        "message": "Test",
+        "rating": 5,
+        "uuid": "e2eeb1c7-4884-4e17-9f3a-8c3852fc857c",
+        "userId": null
+      },
+      {
+        "message": "Sucked",
+        "rating": 2,
+        "uuid": "0a8c7d68-a10d-4609-8df9-ccf437973027",
+        "userId": "ed1a8c4a-4370-4102-9555-54164add431e"
+      },
+      {
+        "message": "was desastrous",
+        "rating": 1,
+        "uuid": "7d890674-5b89-446a-890a-1dfa155feb40",
+        "userId": null
+      },
+      {
+        "message": "This is amazing 123",
+        "rating": 4,
+        "uuid": "b54a9083-a8ce-47b0-8880-642a23925e11",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "37e8cd2d-b80f-4dad-a8a7-3ebcfa9202cb",
+        "userId": "db563825-7872-4ef9-baae-ef4ebc86fdd0"
+      },
+      {
+        "message": "Interesting!",
+        "rating": 3,
+        "uuid": "ecc0ff1c-0295-4115-85df-e186ba0560fe",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "3715b6cd-03b3-495b-bad8-3f88551cfd5b",
+        "userId": null
+      },
+      {
+        "message": "Hello everyone!",
+        "rating": 4,
+        "uuid": "f3f565e5-c884-483b-8dd3-ea1b33cbf7c1",
+        "userId": null
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "e43cfb6e-6b85-4ea8-9f53-39ed0930c1f4",
+        "userId": null
+      },
+      {
+        "message": "so my message",
+        "rating": 1,
+        "uuid": "b64f20c7-c275-42e3-9550-bfc4e9afcc00",
+        "userId": null
+      },
+      {
+        "message": "akkdio Was pretty good.",
+        "rating": 4,
+        "uuid": "7b99aa1a-fc54-4440-a6c2-b48a706124e0",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good",
+        "rating": 4,
+        "uuid": "cdc46b81-e4a6-4a77-a9cf-ee2aedce2a5d",
+        "userId": null
+      },
+      {
+        "message": "Was awesome!",
+        "rating": 5,
+        "uuid": "de564b52-01d8-4db9-8c96-5626516fc367",
+        "userId": null
+      },
+      {
+        "message": "Orkmaster General 7020: spiffing",
+        "rating": 4,
+        "uuid": "2276e0c8-2647-47a6-83fd-cce879ecc53d",
+        "userId": null
+      },
+      {
+        "message": "this is 12345",
+        "rating": 4,
+        "uuid": "edefd9ea-abef-4f43-8d5c-cd21451908d2",
+        "userId": null
+      },
+      {
+        "message": "test was good",
+        "rating": 5,
+        "uuid": "1bd63989-60d0-41f0-91ef-556d3c9b58e5",
+        "userId": null
+      },
+      {
+        "message": "Blew my mind, life won't be the same after this.",
+        "rating": 5,
+        "uuid": "44f099ba-cdc1-47f0-9d39-5edada1f12f8",
+        "userId": null
+      },
+      {
+        "message": "this is good",
+        "rating": 4,
+        "uuid": "c21781d6-226e-44d5-8585-98fb4f122db2",
+        "userId": null
+      },
+      {
+        "message": "Nobis pariatur illo minus.",
+        "rating": 5,
+        "uuid": "1158b3bf-194f-410f-94cd-ad42ecb5aa43",
+        "userId": "f247e28e-6dce-4d2e-bb3c-279d3411369d"
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "03ffbb9f-ae48-475b-8d3c-ec8b984d83d3",
+        "userId": null
+      },
+      {
+        "message": "Was good.hamid",
+        "rating": 5,
+        "uuid": "dc8c77a5-5bf1-4366-baa0-d3944d11220f",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "b33da1d7-29a9-4705-a3de-3364d2bb8757",
+        "userId": null
+      },
+      {
+        "message": "Perty kewl",
+        "rating": 3,
+        "uuid": "7653a447-a696-4a6c-b5d2-290985d9edd6",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience",
+        "rating": 4,
+        "uuid": "b91c089c-f276-492f-a0dc-a63e37032967",
+        "userId": null
+      },
+      {
+        "message": "abc",
+        "rating": 3,
+        "uuid": "24a9a1f3-bf57-4ea7-96bc-e41191230275",
+        "userId": "string"
+      },
+      {
+        "message": "An overall, quite miserable experience",
+        "rating": 1,
+        "uuid": "9fb26312-1fbd-4d3b-8924-7fbf80dcc5c5",
+        "userId": null
+      },
+      {
+        "message": "Un gran post",
+        "rating": 3,
+        "uuid": "e7717339-8926-4242-be73-e42d4a976303",
+        "userId": null
+      },
+      {
+        "message": "wow",
+        "rating": 5,
+        "uuid": "42ddf8a9-9cd2-4d45-93fa-a44ce30e4e2f",
+        "userId": "0c0a30e9-71b7-4da4-9c96-d3a02425e3cf"
+      },
+      {
+        "message": "xyz",
+        "rating": 3,
+        "uuid": "d0c4fd53-53c9-456b-8ac2-d4077a7d53c4",
+        "userId": null
+      },
+      {
+        "message": "Too many cows.",
+        "rating": 3,
+        "uuid": "fafd1547-5dd7-4f33-a1c1-b26d984da3ea",
+        "userId": null
+      },
+      {
+        "message": "Was ok-ish",
+        "rating": 2,
+        "uuid": "4884ab54-7354-42e1-9a54-fcad623b5132",
+        "userId": null
+      },
+      {
+        "message": "with a token",
+        "rating": 1,
+        "uuid": "70bcb282-ba0f-4869-903f-564cfea9ad73",
+        "userId": "PST07unYlE"
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "a3a2414c-ef26-434f-a20e-3bd8f84a21bf",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family after learning.",
+        "rating": 5,
+        "uuid": "5a2e1d93-8e12-413c-8e76-872a94f941cc",
+        "userId": null
+      },
+      {
+        "message": "This is amazing 123",
+        "rating": 4,
+        "uuid": "7f7f9c5a-33e5-44d3-9956-593e58ec60c0",
+        "userId": null
+      },
+      {
+        "message": "with a token",
+        "rating": 1,
+        "uuid": "4bf76373-8d2f-4be5-b0e3-3b024256664e",
+        "userId": null
+      },
+      {
+        "message": "Disappointing. Wanted to buy a new farmer, but they didn't sell any. Total scam!",
+        "rating": 1,
+        "uuid": "174c249c-f3f6-4b3d-a6fd-0ae206f500c0",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience",
+        "rating": 5,
+        "uuid": "be18fbcd-7717-4f1d-9e51-54100c482cf6",
+        "userId": "0c0a30e9-71b7-4da4-9c96-d3a02425e3cf"
+      },
+      {
+        "message": "Orrendo",
+        "rating": 1,
+        "uuid": "78b528c3-0cc8-48c4-b7eb-f7f1402e0af9",
+        "userId": null
+      },
+      {
+        "message": "This is amazing 123",
+        "rating": 4,
+        "uuid": "5a916921-c33f-44a4-bb3e-f1bd27b9b50d",
+        "userId": null
+      },
+      {
+        "message": "Totally Awesome",
+        "rating": 5,
+        "uuid": "ca206cbd-d300-4b82-92ee-bb4e022fc563",
+        "userId": "null"
+      },
+      {
+        "message": "Was good.",
+        "rating": 5,
+        "uuid": "ab10651a-f459-415a-9afb-b7c0ceb251a7",
+        "userId": null
+      },
+      {
+        "message": "An awesome time for the whole family.",
+        "rating": 5,
+        "uuid": "c60fedaf-5a74-46d2-840f-ea019b3c8f06",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "175e7a5d-31df-4861-8e51-7428500f5d4a",
+        "userId": null
+      },
+      {
+        "message": "Blew my mind, life won't be the same after this.",
+        "rating": 5,
+        "uuid": "cfc4ecf6-9ceb-4789-8656-3d3ed3d5ab76",
+        "userId": null
+      },
+      {
+        "message": "It was fine.  Suggest you go.",
+        "rating": 4,
+        "uuid": "b147d7b0-0b27-4bb8-9687-192771db217a",
+        "userId": null
+      },
+      {
+        "message": "Was pretty good.",
+        "rating": 4,
+        "uuid": "eb4aa439-f8b1-4849-9859-a1cb977448e2",
+        "userId": null
+      },
+      {
+        "message": "Was so so.",
+        "rating": 2,
+        "uuid": "6e564602-2e69-487c-a55d-e11385926749",
+        "userId": null
+      },
+      {
+        "message": "War ok",
+        "rating": 3,
+        "uuid": "4d1aa719-d311-4e31-86b2-11c2e0c71082",
+        "userId": null
+      },
+      {
+        "message": "Artur was here.",
+        "rating": 5,
+        "uuid": "ccb01517-95e8-4b82-b05d-07030ec62c43",
+        "userId": "80316089-d072-4ebf-9d1d-bfb8507a5d96"
+      },
+      {
+        "message": "Very good",
+        "rating": 4,
+        "uuid": "9b669b27-ac82-4f7a-9e29-03b19d8033e5",
+        "userId": null
+      },
+      {
+        "message": "A lovely experience",
+        "rating": 5,
+        "uuid": "8fe8817b-809a-4b43-b95c-45baf7ea1c64",
+        "userId": null
+      },
+      {
+        "message": "Totally awesome",
+        "rating": 5,
+        "uuid": "7209eb95-a0f2-43c2-a9a7-239061f4cee7",
+        "userId": null
+      }
+    ]
+  },
+  "createReview": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:03 GMT",
+      "content-type": "application/json",
+      "content-length": "98",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "34",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "message": "test was good",
+      "rating": 5,
+      "uuid": "1bd63989-60d0-41f0-91ef-556d3c9b58e5",
+      "userId": null
+    }
+  },
+  "getReview": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "content-type": "application/json",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "33",
+      "x-ratelimit-reset": "1574242841",
+      "date": "Wed, 20 Nov 2019 09:39:41 GMT",
+      "content-length": "47",
+      "connection": "close"
+    },
+    "content": {
+      "message": "was good",
+      "rating": 5,
+      "userId": null
+    }
+  },
+  "getReviewFromCreateReview": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:09 GMT",
+      "content-type": "application/json",
+      "content-length": "98",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "33",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "message": "test was good",
+      "rating": 5,
+      "uuid": "1bd63989-60d0-41f0-91ef-556d3c9b58e5",
+      "userId": null
+    }
+  },
+  "getReviewMissing": {
+    "status": 404,
+    "statusText": "Not Found",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:14 GMT",
+      "content-type": "application/json",
+      "content-length": "201",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "32",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "type": "https://farmstall.ponelat.com/probs/not-found",
+      "title": "Resource not found",
+      "detail": "",
+      "status": 404,
+      "instance": "https://farmstall.ponelat.com/v1/reviews/f7f680a8-d111-421f-b6b3-493ebf905078"
+    }
+  },
+  "createUser": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:20 GMT",
+      "content-type": "application/json",
+      "content-length": "86",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "31",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "uuid": "f247e28e-6dce-4d2e-bb3c-279d3411369d",
+      "username": "Heaven",
+      "fullName": "Alysa"
+    }
+  },
+  "createToken": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:26 GMT",
+      "content-type": "application/json",
+      "content-length": "22",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "30",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "token": "RnTkIJFYOq"
+    }
+  },
+  "createReviewAsUser": {
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+      "server": "nginx/1.17.6",
+      "date": "Sat, 20 Mar 2021 09:36:31 GMT",
+      "content-type": "application/json",
+      "content-length": "145",
+      "connection": "close",
+      "vary": "Origin",
+      "x-ratelimit-limit": "36",
+      "x-ratelimit-remaining": "29",
+      "x-ratelimit-reset": "1616233017"
+    },
+    "content": {
+      "message": "Nobis pariatur illo minus.",
+      "rating": 5,
+      "uuid": "1158b3bf-194f-410f-94cd-ad42ecb5aa43",
+      "userId": "f247e28e-6dce-4d2e-bb3c-279d3411369d"
+    }
+  },
+  "reviewMessage": "<$ Faker(\"lorem.sentence\", 10) $>",
+  "testNull": {
+    "status": 200,
+    "statusText": "OK",
+    "headers": {
+      "access-control-allow-credentials": "true",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json",
+      "date": "Wed, 20 Nov 2019 10:24:15 GMT",
+      "referrer-policy": "no-referrer-when-downgrade",
+      "server": "nginx",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "x-xss-protection": "1; mode=block",
+      "content-length": "493",
+      "connection": "Close"
+    },
+    "content": {
+      "args": {},
+      "data": "{\"one\":null,\"two\":\"\",\"three\":false}",
+      "files": {},
+      "form": {},
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Length": "35",
+        "Content-Type": "application/json",
+        "Host": "httpbin.org",
+        "User-Agent": "axios/0.18.1"
+      },
+      "json": {
+        "one": null,
+        "three": false,
+        "two": ""
+      },
+      "method": "POST",
+      "origin": "197.185.114.106, 197.185.114.106",
+      "url": "https://httpbin.org/anything"
+    }
+  }
+}

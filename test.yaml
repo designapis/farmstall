@@ -1,0 +1,39 @@
+openapi: 3.0.2
+
+suite:
+  - name: Empty
+    state:
+      reviews: {}
+    tests:
+      - name: Get empty list
+        operation: getReviews
+        parameters: {}
+        response: []
+      - name: Add a review
+        operation: getReviews
+        parameters: {}
+        response: []
+
+Given the server has no Reviews
+When I invoke getReviews
+Then I expect an empty list
+
+
+
+paths:
+  /reviews:
+    get:
+      operationId: getReviews
+      x-tests:
+        - name: Empty list
+          description: When no reviews, should return an empty list
+          state:
+            $ref: #/components/states/Empty
+          application/json:
+              content:
+
+
+components:
+  states:
+    Empty:
+      reviews: {}

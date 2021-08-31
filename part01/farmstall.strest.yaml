@@ -1,0 +1,9 @@
+version: 2
+requests:
+  getReviews:
+    request:
+      url: <$ Env("URL") $>/v1/reviews
+      method: GET
+    validate:
+    - jsonpath: status
+      expect: 201
