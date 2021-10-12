@@ -91,3 +91,23 @@ requests:
     validate:
     - jsonpath: content.userId
       expect: <$ createUser.content.uuid $>
+
+  generateProblem:
+    request:
+      url: <$ Env("URL") $>/v1/reviews
+      method: POST
+      headers:
+        - name: Authorization
+          value: invalid
+      postData:
+        mimeType: application/json
+        text:
+          message: <$ Faker("lorem.sentence", 10) $>
+          rating: 5
+    validate:
+    - jsonpath: status
+      expect: 403
+    - jsonpath: content.type
+      expect: <$ Env("FQDN") $>/probs/invalid-credentials
+    - jsonpath: content.detail
+      expect: Invalid token

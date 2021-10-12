@@ -10,7 +10,7 @@ let pkgs = import nixpkgs { overlays = [(self: super: {
 in
 
 pkgs.mkShell {
-  buildInputs = [ pkgs.nodejs pkgs.yarn pkgs.bash pkgs.go ];
+  buildInputs = [ pkgs.nodejs pkgs.yarn pkgs.bash ];
   shellHook = ''
       mkdir -p .nix-node
       export NPM_CONFIG_PREFIX=$PWD/.nix-node

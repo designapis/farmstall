@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 PORT=9999 go run ./server.go >/dev/null 2>&1 &
 server_pid=$!
