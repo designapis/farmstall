@@ -44,16 +44,16 @@ info:
 
   contact:
     name: Josh Ponelat
-    email: jponelat@gmail.com
-    url: https://designapis.com/contact
+    email: jponelat+daso@gmail.com
+    url: https://farmstall.designapis.com
 
   license:
     url: https://www.apache.org/licenses/LICENSE-2.0
     name: Apache 2.0
 
 externalDocs:
-  url: https://app.swaggerhub.com/apis/designing-apis/part-one
-  description: SwaggerHub
+  url: https://farmstall.designapis.com
+  description: Hosted docs
 
 tags:
   - name: Reviews
@@ -92,13 +92,16 @@ paths:
                       maximum: 5
                     message:
                       type: string
+                      example: An awesome time for the whole family.
                     uuid:
                       type: string
                       pattern: '^[0-9a-fA-F\-]{36}$'
+                      example: 3b5b1707-b82c-4b1d-9078-157053902525
                     userId:
                       type: string
                       pattern: '^[0-9a-fA-F\-]{36}$'
                       nullable: true
+                      example: 3b5b1707-b82c-4b1d-9078-157053902525
 
     post:
       tags:
@@ -107,6 +110,7 @@ paths:
       security:
       - MyUserToken: []
       requestBody:
+        description: A new Review
         content:
           application/json:
             schema:
@@ -139,12 +143,12 @@ paths:
                   userId:
                     type: string
                     nullable: true
-                    pattern: '[a-zA-Z-.0-9]{36}'
-                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    example: 3b5b1707-b82c-4b1d-9078-157053902525
                   uuid:
                     type: string
-                    pattern: '[a-zA-Z-.0-9]{36}'
-                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    example: 3b5b1707-b82c-4b1d-9078-157053902525
 
 
   /reviews/{reviewId}:
@@ -158,6 +162,8 @@ paths:
         required: true
         schema:
           type: string
+          description: The review's ID
+          example: 3b5b1707-b82c-4b1d-9078-157053902525
           minLength: 36
           maxLength: 36
           pattern: '[a-zA-Z0-9-]+'
@@ -182,12 +188,12 @@ paths:
                     maxLength: 36
                     pattern: '^[a-zA-Z0-9-]+$'
                     nullable: true
-                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                    example: 3b5b1707-b82c-4b1d-9078-157053902525
                   uuid:
                     minLength: 36
                     maxLength: 36
                     pattern: '^[a-zA-Z0-9-]+$'
-                    example: f7f680a8-d111-421f-b6b3-493ebf905078
+                    example: 3b5b1707-b82c-4b1d-9078-157053902525
         '404':
           description: Review not found
 
